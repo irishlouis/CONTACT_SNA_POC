@@ -25,7 +25,7 @@ head(df)
 # tidy data
 df2 <- df %>% 
   filter(STUDY_ID != "") %>%
-  filter(THERAPEUTIC_AREA_NM == "Oncology") %>%
+  filter(THERAPEUTIC_AREA_NM == "Cardiovascular") %>%  # filter(THERAPEUTIC_AREA_NM == "Oncology") %>%
   select(LOCATION_ID, PI_CONTACT_ID) %>% 
   mutate(PI_CONTACT_ID = as.numeric(PI_CONTACT_ID)) %>%
   distinct
@@ -79,7 +79,7 @@ gg <- ggplot() +
   geom_nodes(data=dat,
              aes(x=x, y=y, xend=xend, yend=yend, size=sqrt(size)),
              alpha=1/3) +
-  geom_label_repel(data=unique(dat[dat$size>45,c(1,2,5)]),
+  geom_label_repel(data=unique(dat[dat$size>5,c(1,2,5)]),
                    aes(x=x, y=y, label=vertex.names), 
                    fontface = "bold",
                    size=2, 
@@ -89,8 +89,8 @@ gg <- ggplot() +
   theme(legend.position="none") +
   labs(title = "Socal Network of PI's linked by Location_ID") +
   theme(plot.title = element_text(size = 20, face = "bold"))
-
-pdf("Oncology SNA Graph 30x18.pdf", width=30/2.54, height=18/2.54)
+gg
+pdf("Cardiovascular SNA Graph 30x18.pdf", width=30/2.54, height=18/2.54)
 plot(gg)
 dev.off()
 
